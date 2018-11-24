@@ -15,7 +15,7 @@ class DJRaspberry(object):
         self.current_volume = VOLUME_CONTROL[NORMAL]
 
     def run(self, data):
-        print 'called'
+        print('called')
         action = data.split(' ')[0]
         if PLAY in action:
             self.play_music(data.split(PLAY)[1].strip())
@@ -26,10 +26,10 @@ class DJRaspberry(object):
         elif PAUSE in action or RESUME in action:
             self.pause_and_resume()
         else:
-            print 'invalid input'
+            print( 'invalid input')
 
     def play_music(self, song):
-        print 'play music'
+        print( 'play music')
         self.stop_music()
         self.music_process = subprocess.Popen('sudo mpsyt;'.format(**locals()),
                                               shell=True,
@@ -40,15 +40,15 @@ class DJRaspberry(object):
 
 
     def stop_music(self):
-        print 'stop'
+        print( 'stop')
         if self.music_process:
-            print 'kill'
+            print( 'kill')
             os.killpg(self.music_process.pid, signal.SIGTERM)
             self.music_process = None
 
 
     def pause_and_resume(self):
-        print 'pause'
+        print( 'pause')
         if self.music_process:
             self.music_process.stdin.write(" ")
 
@@ -76,7 +76,7 @@ def handle(msg):
     chat_id = msg['chat']['id']
     command = msg['text'].strip().lower()
 
-    print 'Got command: %s' % command
+    print( 'Got command: %s' % command)
 
     dj.run(command)
 
@@ -86,7 +86,7 @@ def handle(msg):
 bot = telepot.Bot('620551592:AAG0cstQ3y3QEyyyN0dsRy9A4KteNWmPgQs')
 
 MessageLoop(bot, handle).run_as_thread()
-print 'I am listening ...'
+print( 'I am listening ...')
 
 while 1:
     time.sleep(10)
