@@ -86,7 +86,7 @@ def handle(msg):
     bot.sendMessage(chat_id, 'Playing...')
 
 
-bot = telepot.Bot('620551592:AAG0cstQ3y3QEyyyN0dsRy9A4KteNWmPgQs')
+bot =
 
 MessageLoop(bot, handle).run_as_thread()
 print( 'I am listening ...')
