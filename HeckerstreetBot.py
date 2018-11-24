@@ -21,7 +21,7 @@ class DJRaspberry(object):
         print('called')
         action = data.split(' ')[0]
         if PLAY in action:
-            self.play_music2(data.split(PLAY)[1].strip())
+            self.play_music(data.split(PLAY)[1].strip())
         elif STOP in action:
             self.stop_music()
         elif VOLUME in action:
@@ -41,13 +41,7 @@ class DJRaspberry(object):
                                               preexec_fn=os.setsid)
         self.music_process.stdin.write("/"+song+"\n1\n")
 
-    def play_music2(self, song):
-        print('play music')
-        self.stop_music()
-        mps_youtube.main.main()
-        import sys
-        sys.stdin.write("/song \n")
-        sys.stdin.write("1\n")
+
     def stop_music(self):
         print( 'stop')
         if self.music_process:
