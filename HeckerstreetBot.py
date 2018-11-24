@@ -1,7 +1,10 @@
+import os
+import signal
+import subprocess
+import time
+import mps_youtube
 import telepot
 from telepot.loop import MessageLoop
-
-import os, signal, subprocess, time
 
 VOLUME_SETTINGS = (LOW, MEDIUM, NORMAL, HI, MAX) = ('low', 'medium', 'normal', 'hi', 'max')
 COMMANDS = (PLAY, STOP, PAUSE, RESUME, VOLUME) = ('play', 'stop', 'pause', 'resume', 'volume')
@@ -18,7 +21,7 @@ class DJRaspberry(object):
         print('called')
         action = data.split(' ')[0]
         if PLAY in action:
-            self.play_music(data.split(PLAY)[1].strip())
+            self.play_music2(data.split(PLAY)[1].strip())
         elif STOP in action:
             self.stop_music()
         elif VOLUME in action:
@@ -31,14 +34,20 @@ class DJRaspberry(object):
     def play_music(self, song):
         print( 'play music')
         self.stop_music()
-        self.music_process = subprocess.Popen('sudo mpsyt;'.format(**locals()),
+        self.music_process = subprocess.Popen('sudo mpsyt;',
                                               shell=True,
                                               stdout=subprocess.PIPE,
                                               stdin=subprocess.PIPE,
                                               preexec_fn=os.setsid)
-        self.music_process.stdin.write("/{song}\n1\n".format(**locals()))
+        self.music_process.stdin.write("/"+song+"\n1\n")
 
-
+    def play_music2(self, song):
+        print('play music')
+        self.stop_music()
+        mps_youtube.main.main()
+        import sys
+        sys.stdin.write("/song \n")
+        sys.stdin.write("1\n")
     def stop_music(self):
         print( 'stop')
         if self.music_process:
